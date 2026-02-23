@@ -9,7 +9,7 @@ export const siteConfig = {
         linkedin: "ha-re-ram", // Update if needed
         twitter: "ha_re_ram" // Update if needed
     },
-    url: "https://hareramkushwaha.np.com", // update with your custom domain
+    url: "https://hareramkushwaha.com.np", // update with your custom domain
     // Manage your projects here. 
     // If you want to show only specific projects, list them here.
     // If this list is empty, we will show recent GitHub repos.
