@@ -63,6 +63,14 @@ export default function RootLayout({
             <Link href="/about" className="hover:text-white">About</Link>
             <Link href="/projects" className="hover:text-white">Projects</Link>
             <Link href="/blog" className="hover:text-white">Blog</Link>
+            <a
+              href={siteConfig.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
+              Resume
+            </a>
           </div>
         </nav>
 

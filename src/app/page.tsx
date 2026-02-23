@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/lib/config";
 
 export default function Home() {
   return (
@@ -33,7 +34,7 @@ export default function Home() {
             href="/projects"
             className="group relative px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition-all flex items-center gap-2"
           >
-            View Projects
+            Projects
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
 
@@ -41,8 +42,18 @@ export default function Home() {
             href="/blog"
             className="px-8 py-3.5 border border-gray-700 text-gray-300 rounded-full hover:bg-gray-900 hover:text-white hover:border-gray-500 transition-all backdrop-blur-sm"
           >
-            Read Technical Blog
+            Blog
           </Link>
+
+          <a
+            href={siteConfig.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-3.5 border border-gray-700 text-gray-300 rounded-full hover:bg-gray-900 hover:text-white hover:border-gray-500 transition-all backdrop-blur-sm flex items-center gap-2"
+          >
+            Resume
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 7h10v10" /><path d="M7 17L17 7" /></svg>
+          </a>
         </div>
 
         {/* Tech Stack Marquee (Simplified) */}

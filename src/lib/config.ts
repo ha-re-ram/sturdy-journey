@@ -2,6 +2,8 @@ export const siteConfig = {
     title: "Hareram Kushwaha",
     description: "Computer Science student focused on building scalable systems and continuous improvement.",
     author: "Hareram Kushwaha",
+    resumeUrl: "https://ha-re-ram.github.io/Resume/",
+    resumeSource: "https://github.com/ha-re-ram/Resume",
     social: {
         github: "ha-re-ram",
         linkedin: "ha-re-ram", // Update if needed
