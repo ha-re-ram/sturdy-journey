@@ -69,9 +69,20 @@ export default function Comments({ itemId }: { itemId: string }) {
         }
         try {
             const provider = new GoogleAuthProvider();
+            // Optional: force custom parameters if desired
+            provider.setCustomParameters({
+                prompt: 'select_account'
+            });
             await signInWithPopup(auth, provider);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Login failed", error);
+            if (error.code === 'auth/popup-closed-by-user') {
+                // Ignore, user just closed it
+            } else if (error.code === 'auth/unauthorized-domain') {
+                alert("Domain not authorized for Google Sign-In. Please add this domain to the Firebase Console -> Authentication -> Settings -> Authorized Domains.");
+            } else {
+                alert("Error logging in: " + error.message);
+            }
         }
     };
 

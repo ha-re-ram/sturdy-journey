@@ -59,17 +59,22 @@ export default function AdminDashboard() {
 
     const fetchItems = async (collectionName: string) => {
         if (!db) return;
-        const querySnapshot = await getDocs(collection(db, collectionName));
-        const data: any[] = [];
-        querySnapshot.forEach((doc) => {
-            data.push({ id: doc.id, ...doc.data() });
-        });
-        // Sort by order first, then date
-        data.sort((a, b) => {
-            if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
-            return new Date(b.date).getTime() - new Date(a.date).getTime();
-        });
-        setItems(data);
+        try {
+            const querySnapshot = await getDocs(collection(db, collectionName));
+            const data: any[] = [];
+            querySnapshot.forEach((doc) => {
+                data.push({ id: doc.id, ...doc.data() });
+            });
+            // Sort by order first, then date
+            data.sort((a, b) => {
+                if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+                return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
+            setItems(data);
+        } catch (error: any) {
+            console.error("Error fetching data:", error);
+            alert("Database Error: " + error.message + "\n\nPlease check your Firestore Security Rules in the Firebase Console! They might be set to 'Production' instead of 'Test Mode'.");
+        }
     };
 
     const fetchGithubRepos = async () => {
@@ -341,8 +346,8 @@ export default function AdminDashboard() {
                                                 {item.title}
                                                 {tab === "projects" && (
                                                     <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${item.category === 'Completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                                            item.category === 'Working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                                                                'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                                                        item.category === 'Working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                                                            'bg-blue-500/10 text-blue-500 border-blue-500/20'
                                                         }`}>{item.category || "Completed"}</span>
                                                 )}
                                             </h3>
