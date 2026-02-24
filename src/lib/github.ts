@@ -42,7 +42,11 @@ export async function getGitRep(): Promise<GitHubRepo[]> {
         curatedProjects.forEach(configProject => {
             const repo = repos.find(r => r.name.toLowerCase() === configProject.name.toLowerCase());
             if (repo) {
-                sortedRepos.push({ ...repo, status: configProject.status });
+                sortedRepos.push({
+                    ...repo,
+                    status: configProject.status,
+                    description: configProject.description || repo.description
+                });
             }
         });
 

@@ -24,9 +24,9 @@ export default function Home() {
           </span>
         </h1>
 
-        <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-          I'm <span className="text-white font-semibold">Hareram Kushwaha</span>, a Computer Science student
-          crafting high-performance web applications and exploring distributed systems.
+        <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+          I'm <span className="text-white font-semibold">Hareram Kushwaha</span>, a CS Engineering student
+          focused on writing correct, readable code and building maintainable systems that scale.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
@@ -60,7 +60,7 @@ export default function Home() {
         <div className="mt-24 pt-10 border-t border-gray-800/50">
           <p className="text-sm text-gray-500 mb-6 uppercase tracking-widest">Tech Stack</p>
           <div className="flex flex-wrap justify-center gap-8 text-gray-400 grayscale hover:grayscale-0 transition-all duration-500">
-            {['Next.js', 'React', 'TypeScript', 'Tailwind', 'Node.js', 'System Design'].map((tech) => (
+            {['Next.js', 'React', 'TypeScript', 'Java', 'PHP', 'Tailwind', 'Node.js', 'MySQL'].map((tech) => (
               <span key={tech} className="hover:text-white transition-colors cursor-default text-lg font-medium">{tech}</span>
             ))}
           </div>

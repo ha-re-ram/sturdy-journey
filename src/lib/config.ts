@@ -1,6 +1,7 @@
 export const siteConfig = {
     title: "Hareram Kushwaha",
     description: "Computer Science student focused on building scalable systems and continuous improvement.",
+    bio: "Computer Science Engineering student focused on writing correct, readable code and improving problem-solving skills through consistent practice. I prefer clear, maintainable solutions and enjoy building small projects to learn new tools and concepts.",
     author: "Hareram Kushwaha",
     resumeUrl: "https://ha-re-ram.github.io/Resume/",
     resumeSource: "https://github.com/ha-re-ram/Resume",
