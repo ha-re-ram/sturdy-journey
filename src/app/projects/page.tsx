@@ -1,14 +1,10 @@
-import { getGitRep, GitHubRepo } from "@/lib/github";
 import Link from 'next/link';
-import ProjectList from "./ProjectList";
 import DynamicProjectList from "@/components/DynamicProjectList";
 
 export default async function Projects() {
-    const repos: GitHubRepo[] = await getGitRep();
-
     return (
         <main className="min-h-screen bg-black text-white py-20 px-6 sm:px-10 max-w-7xl mx-auto">
-            <header className="mb-20">
+            <header className="mb-8">
                 <h1 className="text-5xl md:text-8xl font-black mb-8 bg-gradient-to-r from-blue-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent">
                     Projects
                 </h1>
@@ -16,14 +12,6 @@ export default async function Projects() {
                     A collection of systems and applications I&apos;ve built, ranging from web architectures to low-level OS experiments.
                 </p>
             </header>
-
-            {repos.length === 0 ? (
-                <div className="text-center py-20 border border-gray-800 rounded-3xl bg-gray-900/20">
-                    <p className="text-gray-500 text-lg">No repositories found. Check back later!</p>
-                </div>
-            ) : (
-                <ProjectList repos={repos} />
-            )}
 
             <DynamicProjectList />
 
