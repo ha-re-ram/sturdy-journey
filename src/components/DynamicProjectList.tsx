@@ -89,18 +89,18 @@ export default function DynamicProjectList() {
                             </h2>
                         </Link>
                         <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-4 min-h-[5rem]">
-                            {repo.content.substring(0, 160)}...
+                            {(repo.content || "").substring(0, 160)}...
                         </p>
                     </div>
 
                     <div className="mt-auto space-y-6">
                         {repo.category && (
                             <div className={`inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded-full border ${repo.category.toLowerCase() === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                    repo.category.toLowerCase() === 'working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                                        'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                                repo.category.toLowerCase() === 'working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                                    'bg-blue-500/10 text-blue-500 border-blue-500/20'
                                 }`}>
                                 <span className={`w-1.5 h-1.5 rounded-full ${repo.category.toLowerCase() === 'completed' ? 'bg-emerald-500' :
-                                        repo.category.toLowerCase() === 'working' ? 'bg-amber-500' : 'bg-blue-500'
+                                    repo.category.toLowerCase() === 'working' ? 'bg-amber-500' : 'bg-blue-500'
                                     }`}></span>
                                 {repo.category}
                             </div>

@@ -75,12 +75,13 @@ export default function Comments({ itemId }: { itemId: string }) {
             });
             await signInWithPopup(auth, provider);
         } catch (error: any) {
-            console.error("Login failed", error);
             if (error.code === 'auth/popup-closed-by-user') {
-                // Ignore, user just closed it
+                // Ignore, user just closed it. Don't console.error to avoid Next.js dev overlay.
             } else if (error.code === 'auth/unauthorized-domain') {
+                console.error("Login failed", error);
                 alert("Domain not authorized for Google Sign-In. Please add this domain to the Firebase Console -> Authentication -> Settings -> Authorized Domains.");
             } else {
+                console.error("Login failed", error);
                 alert("Error logging in: " + error.message);
             }
         }

@@ -7,36 +7,14 @@ import { useRef } from "react";
 
 export default function Home() {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
+  // Simplified variants for a quick fade in instead of long staggered chains that break visibility
+  const simpleFadeIn: Variants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { y: 30, opacity: 0, scale: 0.95 },
-    visible: {
       y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      },
-    },
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
   };
 
   return (
@@ -50,13 +28,12 @@ export default function Home() {
         {/* Header/Hero Section */}
         <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-6 text-center overflow-hidden">
           <motion.div
-            style={{ y: textY, opacity }}
-            variants={containerVariants}
+            variants={simpleFadeIn}
             initial="hidden"
             animate="visible"
-            className="max-w-6xl mx-auto w-full flex flex-col items-center relative z-20"
+            className="max-w-6xl mx-auto w-full flex flex-col items-center relative z-20 pt-20"
           >
-            <motion.div variants={itemVariants} className="mb-8 inline-block">
+            <div className="mb-8 inline-block">
               <span className="glass-glow px-6 py-2 rounded-full text-sm text-blue-200 flex items-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -64,10 +41,9 @@ export default function Home() {
                 </span>
                 <span className="font-medium tracking-wide">Available for new opportunities</span>
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              variants={itemVariants}
+            <h1
               className="text-7xl md:text-9xl lg:text-[11rem] font-black mb-6 tracking-tighter leading-[0.9]"
             >
               <span className="text-white drop-shadow-2xl">
@@ -77,26 +53,24 @@ export default function Home() {
               <span className="text-gradient drop-shadow-2xl">
                 Excellence.
               </span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              variants={itemVariants}
+            <p
               className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-14 max-w-3xl mx-auto leading-relaxed font-light drop-shadow-md"
             >
               {siteConfig.bio}
-            </motion.p>
+            </p>
 
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full sm:w-auto"
+            <div
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full sm:w-auto mt-4"
             >
               <Link
                 href="/projects"
                 className="group relative px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:shadow-[0_0_60px_rgba(255,255,255,0.4)] w-full sm:w-auto overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent translate-x-[-150%] skew-x-[-15deg] group-hover:translate-x-[150%] transition-transform duration-1000"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent translate-x-[-150%] skew-x-[-15deg] group-hover:translate-x-[150%] transition-transform duration-700"></div>
                 View My Work
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
 
               <a
@@ -106,25 +80,12 @@ export default function Home() {
                 className="group px-10 py-5 glass-glow text-white font-semibold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
               >
                 Get Resume
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-y-[-2px] transition-transform"><path d="M7 7h10v10" /><path d="M7 17L17 7" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M7 7h10v10" /><path d="M7 17L17 7" /></svg>
               </a>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
-          >
-            <div className="w-8 h-12 border-2 border-white/20 rounded-full flex justify-center p-2 backdrop-blur-sm bg-black/20">
-              <motion.div
-                animate={{ y: [0, 16, 0], opacity: [1, 0.5, 1] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                className="w-1.5 h-3 bg-white/80 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-              />
             </div>
           </motion.div>
+
+
         </section>
 
         {/* Dynamic Interactive Features Section */}

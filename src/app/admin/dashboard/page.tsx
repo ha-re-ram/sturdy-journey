@@ -372,7 +372,7 @@ export default function AdminDashboard() {
                                                                 }`}>{item.category || "Completed"}</span>
                                                         )}
                                                     </h3>
-                                                    <p className="text-sm text-gray-500 truncate mr-4">{item.content.substring(0, 80)}...</p>
+                                                    <p className="text-sm text-gray-500 truncate mr-4">{(item.content || "").substring(0, 80)}...</p>
                                                 </div>
                                             </div>
 

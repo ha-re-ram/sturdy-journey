@@ -52,8 +52,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-black text-white antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-black text-white antialiased" suppressHydrationWarning>
         <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/50 backdrop-blur-xl">
           <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
             <Link href="/" className="text-2xl font-black tracking-tighter hover:text-blue-400 transition-colors">
