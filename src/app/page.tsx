@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { siteConfig } from "@/lib/config";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef } from "react";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -26,7 +26,7 @@ export default function Home() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 30, opacity: 0, scale: 0.95 },
     visible: {
       y: 0,
@@ -34,7 +34,7 @@ export default function Home() {
       scale: 1,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
+        ease: "easeOut"
       },
     },
   };
