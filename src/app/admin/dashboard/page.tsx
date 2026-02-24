@@ -5,7 +5,8 @@ import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { ChevronUp, ChevronDown, Edit2, Trash2, Github, Plus } from "lucide-react";
+import { Edit2, Trash2, Github, Plus, GripVertical, Save } from "lucide-react";
+import { Reorder } from "framer-motion";
 
 export default function AdminDashboard() {
     const [user, setUser] = useState<any>(null);
@@ -22,6 +23,7 @@ export default function AdminDashboard() {
     const [editId, setEditId] = useState<string | null>(null);
 
     const [items, setItems] = useState<any[]>([]);
+    const [isSavingOrder, setIsSavingOrder] = useState(false);
 
     // GitHub candidates
     const [githubRepos, setGithubRepos] = useState<any[]>([]);
@@ -174,25 +176,28 @@ export default function AdminDashboard() {
         }
     };
 
-    const handleMove = async (index: number, direction: 'up' | 'down') => {
+    const handleReorder = (newOrder: any[]) => {
+        setItems(newOrder); // Instant local UI update
+    };
+
+    const saveReorder = async () => {
         if (!db) return;
-        if (direction === 'up' && index === 0) return;
-        if (direction === 'down' && index === items.length - 1) return;
-
-        const targetIndex = direction === 'up' ? index - 1 : index + 1;
-        const currentItem = items[index];
-        const targetItem = items[targetIndex];
-
-        // Swap order fields
-        const tempOrder = currentItem.order !== undefined ? currentItem.order : index;
-        const newOrder = targetItem.order !== undefined ? targetItem.order : targetIndex;
-
+        setIsSavingOrder(true);
         try {
-            await updateDoc(doc(db, tab, currentItem.id), { order: newOrder });
-            await updateDoc(doc(db, tab, targetItem.id), { order: tempOrder });
+            // Only update those whose index actually changed from their local .order property
+            const promises = items.map((item, index) => {
+                if (item.order !== index) {
+                    return updateDoc(doc(db, tab, item.id), { order: index });
+                }
+                return Promise.resolve();
+            });
+            await Promise.all(promises);
             fetchItems(tab);
+            alert("New order saved successfully!");
         } catch (error) {
-            alert("Error reordering");
+            alert("Error saving the new order.");
+        } finally {
+            setIsSavingOrder(false);
         }
     };
 
@@ -325,55 +330,73 @@ export default function AdminDashboard() {
                     <div className="bg-white/5 p-6 rounded-xl border border-white/10 flex flex-col">
                         <h2 className="text-2xl font-bold mb-6 flex justify-between items-center">
                             <span>Manage {tab === "blogs" ? "Blogs" : "Projects"}</span>
-                            <span className="text-sm font-normal text-gray-500 bg-black/50 px-3 py-1 rounded-full border border-gray-800">Total: {items.length}</span>
+                            <div className="flex items-center gap-3">
+                                {items.length > 1 && (
+                                    <button
+                                        onClick={saveReorder}
+                                        disabled={isSavingOrder}
+                                        className="flex items-center gap-2 text-sm bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/40 px-4 py-1.5 rounded-full border border-emerald-500/20 transition disabled:opacity-50"
+                                    >
+                                        <Save size={14} /> {isSavingOrder ? "Saving..." : "Save Order"}
+                                    </button>
+                                )}
+                                <span className="text-sm font-normal text-gray-500 bg-black/50 px-3 py-1 rounded-full border border-gray-800">Total: {items.length}</span>
+                            </div>
                         </h2>
 
-                        <div className="space-y-4 max-h-[750px] overflow-y-auto pr-2 custom-scrollbar flex-1">
+                        <div className="space-y-4 max-h-[750px] overflow-y-auto pr-2 custom-scrollbar flex-1 overflow-x-hidden">
                             {items.length === 0 ? (
                                 <div className="text-center py-20 text-gray-600 bg-black/20 rounded-xl border border-dashed border-gray-800">
                                     No {tab} found. Create your first one!
                                 </div>
-                            ) : items.map((item, index) => (
-                                <div key={item.id} className={`bg-black/40 p-4 rounded-xl border transition group flex justify-between items-center ${editId === item.id ? 'border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-white/5 hover:border-blue-500/30'}`}>
-
-                                    <div className="flex items-center gap-4 flex-1 overflow-hidden">
-                                        <div className="flex flex-col gap-1 items-center bg-white/5 p-1 rounded-md">
-                                            <button onClick={() => handleMove(index, 'up')} disabled={index === 0} className="text-gray-500 hover:text-white disabled:opacity-30 disabled:hover:text-gray-500"><ChevronUp size={16} /></button>
-                                            <button onClick={() => handleMove(index, 'down')} disabled={index === items.length - 1} className="text-gray-500 hover:text-white disabled:opacity-30 disabled:hover:text-gray-500"><ChevronDown size={16} /></button>
-                                        </div>
-                                        <div className="flex-1 truncate">
-                                            <h3 className="font-semibold text-lg truncate flex items-center gap-3">
-                                                {item.title}
-                                                {tab === "projects" && (
-                                                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${item.category === 'Completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                                        item.category === 'Working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                                                            'bg-blue-500/10 text-blue-500 border-blue-500/20'
-                                                        }`}>{item.category || "Completed"}</span>
-                                                )}
-                                            </h3>
-                                            <p className="text-sm text-gray-500 truncate mr-4">{item.content.substring(0, 80)}...</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => handleEdit(item)}
-                                            className="text-amber-400 opacity-80 hover:opacity-100 hover:bg-amber-400/20 transition p-2 rounded-md bg-white/5"
-                                            title="Edit"
+                            ) : (
+                                <Reorder.Group axis="y" values={items} onReorder={handleReorder} className="space-y-4">
+                                    {items.map((item) => (
+                                        <Reorder.Item
+                                            key={item.id}
+                                            value={item}
+                                            className={`bg-black/40 p-4 rounded-xl border transition group flex justify-between items-center cursor-grab active:cursor-grabbing ${editId === item.id ? 'border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-white/5 hover:border-blue-500/30'}`}
                                         >
-                                            <Edit2 size={16} />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDelete(item.id)}
-                                            className="text-red-400 opacity-80 hover:opacity-100 hover:bg-red-500/20 transition p-2 rounded-md bg-white/5"
-                                            title="Delete"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
 
-                                </div>
-                            ))}
+                                            <div className="flex items-center gap-4 flex-1 overflow-hidden pointer-events-none">
+                                                <div className="flex flex-col gap-1 items-center px-1 text-gray-600 group-hover:text-gray-400 transition">
+                                                    <GripVertical size={20} />
+                                                </div>
+                                                <div className="flex-1 truncate">
+                                                    <h3 className="font-semibold text-lg truncate flex items-center gap-3">
+                                                        {item.title}
+                                                        {tab === "projects" && (
+                                                            <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${item.category === 'Completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                                                                item.category === 'Working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                                                                    'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                                                                }`}>{item.category || "Completed"}</span>
+                                                        )}
+                                                    </h3>
+                                                    <p className="text-sm text-gray-500 truncate mr-4">{item.content.substring(0, 80)}...</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => handleEdit(item)}
+                                                    className="text-amber-400 opacity-80 hover:opacity-100 hover:bg-amber-400/20 transition p-2 rounded-md bg-white/5 cursor-pointer"
+                                                    title="Edit"
+                                                >
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(item.id)}
+                                                    className="text-red-400 opacity-80 hover:opacity-100 hover:bg-red-500/20 transition p-2 rounded-md bg-white/5 cursor-pointer"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+
+                                        </Reorder.Item>
+                                    ))}
+                                </Reorder.Group>
+                            )}
                         </div>
                     </div>
                 </div>
