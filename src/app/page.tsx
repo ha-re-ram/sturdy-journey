@@ -22,7 +22,7 @@ export default function Home() {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "anticipate"
+        ease: "anticipate" as const
       },
     },
   };

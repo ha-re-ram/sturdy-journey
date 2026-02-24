@@ -1,6 +1,7 @@
 import { getGitRep, GitHubRepo } from "@/lib/github";
 import Link from 'next/link';
 import ProjectList from "./ProjectList";
+import DynamicProjectList from "@/components/DynamicProjectList";
 
 export default async function Projects() {
     const repos: GitHubRepo[] = await getGitRep();
@@ -23,6 +24,8 @@ export default async function Projects() {
             ) : (
                 <ProjectList repos={repos} />
             )}
+
+            <DynamicProjectList />
 
             <footer className="mt-32 pt-20 border-t border-gray-900 text-center">
                 <p className="text-gray-500 text-lg">

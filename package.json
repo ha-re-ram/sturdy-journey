@@ -8,11 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "firebase": "^12.9.0",
     "framer-motion": "^12.34.3",
     "gray-matter": "^4.0.3",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1"
   },
