@@ -13,7 +13,7 @@ export const siteConfig = {
         hackerrank: "ha_re_ram"
     },
     contact: {
-        email: "hareramkushwaha054@gmail.com",
+        email: "hello@hareramkushwaha.com.np",
         collegeEmail: "23cs054@kpriet.ac.in",
         phone: "+91 8340318593"
     },

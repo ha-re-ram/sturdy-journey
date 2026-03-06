@@ -35,7 +35,19 @@ export default function DynamicBlogList() {
         fetchBlogs();
     }, []);
 
-    if (loading) return null; // Or a stealthy spinner
+    if (loading) return (
+        <div className="mt-12 pt-12 border-t border-gray-900 w-full max-w-5xl mx-auto">
+            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-500 mb-8 w-40 h-8 bg-gray-800 animate-pulse rounded"></h2>
+            <div className="space-y-6">
+                {[1, 2].map((i) => (
+                    <div key={i} className="group bg-gray-900/40 border border-gray-800 p-6 rounded-2xl animate-pulse h-[100px] w-full">
+                        <div className="h-6 w-3/4 bg-gray-800/50 rounded mb-4"></div>
+                        <div className="h-4 w-1/4 bg-gray-800/50 rounded"></div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
     if (blogs.length === 0) return null; // Don't show anything if no dynamic blogs exist
 
     return (

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
 import { siteConfig } from "@/lib/config";
+import TerminalEasterEgg from "@/components/TerminalEasterEgg";
 
 // Font optimization (using Geist Sans/Mono if user prefers, or system fonts)
 // For now, let's keep it simple with system fonts as declared in globals.css,
@@ -120,6 +121,7 @@ export default function RootLayout({
         </header>
 
         <main>{children}</main>
+        <TerminalEasterEgg />
       </body>
     </html>
   );

@@ -55,7 +55,26 @@ export default function DynamicProjectList() {
         show: { y: 0, opacity: 1 }
     };
 
-    if (loading) return <div className="text-center py-20 border border-gray-800 rounded-3xl bg-gray-900/20 text-gray-500">Loading Portfolio...</div>;
+    if (loading) return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+                <div key={i} className="flex flex-col p-8 border border-gray-800 rounded-3xl bg-gray-900/10 backdrop-blur-sm animate-pulse h-[400px]">
+                    <div className="w-12 h-12 bg-gray-800/50 rounded-2xl mb-8"></div>
+                    <div className="h-6 w-3/4 bg-gray-800/50 rounded-lg mb-4"></div>
+                    <div className="h-4 w-full bg-gray-800/50 rounded-lg mb-2"></div>
+                    <div className="h-4 w-5/6 bg-gray-800/50 rounded-lg mb-2"></div>
+                    <div className="h-4 w-4/6 bg-gray-800/50 rounded-lg mb-6"></div>
+                    <div className="mt-auto flex justify-between pt-6 border-t border-gray-800/50">
+                        <div className="h-4 w-12 bg-gray-800/50 rounded-lg"></div>
+                        <div className="flex gap-4">
+                            <div className="h-4 w-16 bg-gray-800/50 rounded-lg"></div>
+                            <div className="h-4 w-16 bg-gray-800/50 rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
 
     if (projects.length === 0) return (
         <div className="text-center py-20 border border-gray-800 rounded-3xl bg-gray-900/20">

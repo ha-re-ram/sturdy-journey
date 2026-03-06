@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/config";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef } from "react";
+import MagneticButton from "@/components/MagneticButton";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -65,24 +66,28 @@ export default function Home() {
             <div
               className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full sm:w-auto mt-4"
             >
-              <Link
-                href="/projects"
-                className="group relative px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:shadow-[0_0_60px_rgba(255,255,255,0.4)] w-full sm:w-auto overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent translate-x-[-150%] skew-x-[-15deg] group-hover:translate-x-[150%] transition-transform duration-700"></div>
-                View My Work
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
+              <MagneticButton>
+                <Link
+                  href="/projects"
+                  className="group relative px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:shadow-[0_0_60px_rgba(255,255,255,0.4)] w-full sm:w-auto overflow-hidden block"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent translate-x-[-150%] skew-x-[-15deg] group-hover:translate-x-[150%] transition-transform duration-700"></div>
+                  View My Work
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </Link>
+              </MagneticButton>
 
-              <a
-                href={siteConfig.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group px-10 py-5 glass-glow text-white font-semibold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
-              >
-                Get Resume
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M7 7h10v10" /><path d="M7 17L17 7" /></svg>
-              </a>
+              <MagneticButton>
+                <a
+                  href={siteConfig.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group px-10 py-5 glass-glow text-white font-semibold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3 w-full sm:w-auto block"
+                >
+                  Get Resume
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M7 7h10v10" /><path d="M7 17L17 7" /></svg>
+                </a>
+              </MagneticButton>
             </div>
           </motion.div>
 

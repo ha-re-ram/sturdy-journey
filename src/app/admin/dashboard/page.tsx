@@ -330,7 +330,7 @@ export default function AdminDashboard() {
                                     className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 custom-scrollbar"
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
-                                    placeholder={tab === "projects" ? "Describe your project..." : "Write your blog..."}
+                                    placeholder={tab === "projects" ? "## The Problem\n\n## The Architecture\n\n## The Impact & Results" : "Write your blog..."}
                                 />
                             </div>
 
