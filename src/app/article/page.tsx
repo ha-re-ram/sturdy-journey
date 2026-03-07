@@ -37,22 +37,24 @@ function ArticleContent() {
         fetchArticle();
     }, [id, type]);
 
-    if (loading) return <div className="text-center py-20 text-gray-400">Loading...</div>;
-    if (!article) return <div className="text-center py-20 text-red-400">Article not found</div>;
+    if (loading) return <div className="text-center py-32 text-[#1a1a1a]/40 font-syne font-bold uppercase tracking-widest text-sm animate-pulse">Loading...</div>;
+    if (!article) return <div className="text-center py-32 text-red-500/80 font-syne font-bold uppercase tracking-widest text-sm">Article not found</div>;
 
     return (
-        <article className="prose prose-invert prose-lg max-w-none">
+        <article className="max-w-4xl mx-auto">
             <button
                 onClick={() => router.back()}
-                className="mb-8 text-gray-400 hover:text-white flex items-center gap-2 transition-colors border max-w-max px-4 py-2 border-white/10 rounded-full"
+                className="mb-16 text-[#1a1a1a]/60 hover:text-[#1a1a1a] flex items-center gap-4 transition-colors font-syne font-bold uppercase tracking-widest text-sm group"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+                <span className="w-8 h-8 rounded-full border border-[#1a1a1a]/20 flex items-center justify-center group-hover:bg-[#1a1a1a] group-hover:text-[#E5D5D0] transition-all">
+                    ←
+                </span>
                 Back
             </button>
-            <h1 className="text-4xl md:text-5xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-500">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-syne font-black mb-8 uppercase tracking-tighter text-[#1a1a1a] leading-none">
                 {article.title}
             </h1>
-            <p className="text-gray-400 mb-12 border-b border-gray-800 pb-8">
+            <p className="text-[#1a1a1a]/50 font-syne font-bold uppercase tracking-widest text-sm mb-16 border-b border-[#1a1a1a]/10 pb-12">
                 {new Date(article.date).toLocaleDateString(undefined, {
                     year: 'numeric',
                     month: 'long',
@@ -60,7 +62,13 @@ function ArticleContent() {
                 })}
             </p>
 
-            <div className="mb-16 prose-p:text-gray-300 prose-headings:text-white prose-a:text-blue-400">
+            <div className="mb-24 prose prose-lg prose-neutral max-w-none 
+                prose-p:text-[#4a4a4a] prose-p:font-light prose-p:leading-relaxed 
+                prose-headings:text-[#1a1a1a] prose-headings:font-syne prose-headings:font-bold prose-headings:uppercase prose-headings:tracking-tight 
+                prose-a:text-[#1a1a1a] prose-a:underline prose-a:underline-offset-4 prose-a:decoration-[#1a1a1a]/30 hover:prose-a:decoration-[#1a1a1a] 
+                prose-strong:text-[#1a1a1a] prose-strong:font-medium
+                prose-blockquote:border-l-[#1a1a1a]/20 prose-blockquote:font-cormorant prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:text-[#1a1a1a]/60
+                prose-ul:text-[#4a4a4a] prose-li:font-light">
                 <ReactMarkdown>{article.content}</ReactMarkdown>
             </div>
 
@@ -71,8 +79,8 @@ function ArticleContent() {
 
 export default function ArticlePage() {
     return (
-        <main className="min-h-screen p-10 max-w-4xl mx-auto pt-24">
-            <Suspense fallback={<div className="text-center pt-32 text-gray-500">Loading article viewer...</div>}>
+        <main className="min-h-screen py-32 px-6 sm:px-10 max-w-5xl mx-auto relative z-20">
+            <Suspense fallback={<div className="text-center pt-32 text-[#1a1a1a]/40 font-syne font-bold uppercase tracking-widest text-sm animate-pulse">Loading article viewer...</div>}>
                 <ArticleContent />
             </Suspense>
         </main>

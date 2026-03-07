@@ -13,21 +13,21 @@ export const metadata: Metadata = {
 
 export default async function Projects() {
     return (
-        <main className="min-h-screen bg-black text-white py-20 px-6 sm:px-10 max-w-7xl mx-auto">
-            <header className="mb-8">
-                <h1 className="text-5xl md:text-8xl font-black mb-8 bg-gradient-to-r from-blue-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent">
-                    Projects
+        <main className="min-h-screen py-32 px-6 sm:px-10 max-w-7xl mx-auto relative z-20 text-[#1a1a1a]">
+            <header className="mb-20">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-syne font-black uppercase tracking-tighter mb-8 text-[#1a1a1a]">
+                    Selected <span className="font-cormorant italic font-light tracking-tight normal-case">Projects</span>
                 </h1>
-                <p className="text-xl md:text-2xl text-gray-400 max-w-3xl leading-relaxed font-light">
-                    A collection of systems and applications I&apos;ve built, ranging from web architectures to low-level OS experiments.
+                <p className="text-xl md:text-3xl font-cormorant italic text-[#4a4a4a] max-w-3xl leading-relaxed font-light">
+                    A collection of systems and applications I've built, ranging from scalable web architectures to low-level OS experiments.
                 </p>
             </header>
 
             <DynamicProjectList />
 
-            <footer className="mt-32 pt-20 border-t border-gray-900 text-center">
-                <p className="text-gray-500 text-lg">
-                    More projects can be found on my <Link href={`https://github.com/ha-re-ram`} target="_blank" className="text-gray-300 hover:text-white transition-colors underline underline-offset-8 decoration-gray-800 hover:decoration-blue-500">GitHub profile</Link>.
+            <footer className="mt-32 pt-20 border-t border-[#1a1a1a]/10 text-center">
+                <p className="text-[#4a4a4a] text-lg font-light">
+                    More projects can be found on my <Link href={`https://github.com/ha-re-ram`} target="_blank" className="text-[#1a1a1a] font-syne font-bold uppercase tracking-tight hover:opacity-60 transition-opacity underline underline-offset-8 decoration-[#1a1a1a]/20 hover:decoration-[#1a1a1a]">GitHub profile</Link>.
                 </p>
             </footer>
         </main>

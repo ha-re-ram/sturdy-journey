@@ -36,10 +36,10 @@ export default function AdminLogin() {
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center p-6 bg-black/90 text-white">
-            <div className="max-w-md w-full p-8 border border-white/10 rounded-xl bg-black/50 backdrop-blur-md">
-                <h1 className="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                    Admin Login
+        <main className="min-h-screen flex items-center justify-center p-6 relative z-20">
+            <div className="max-w-md w-full p-10 border border-white/40 rounded-[2.5rem] bg-white/30 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
+                <h1 className="text-4xl font-syne font-black uppercase tracking-tighter mb-8 text-center text-[#1a1a1a]">
+                    Admin <span className="font-cormorant italic font-light lowercase">Login</span>
                 </h1>
 
                 {error && (
@@ -48,32 +48,32 @@ export default function AdminLogin() {
                     </div>
                 )}
 
-                <form onSubmit={handleLogin} className="space-y-4">
+                <form onSubmit={handleLogin} className="space-y-6">
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">Email</label>
+                        <label className="block text-xs font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/60 mb-2">Email</label>
                         <input
                             type="email"
                             required
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-all font-medium"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">Password</label>
+                        <label className="block text-xs font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/60 mb-2">Password</label>
                         <input
                             type="password"
                             required
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-all font-medium"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors mt-2"
+                        className="w-full bg-[#1a1a1a] hover:bg-[#1a1a1a]/80 text-[#E5D5D0] font-syne font-bold uppercase tracking-widest py-4 rounded-full transition-all mt-4"
                     >
-                        Login
+                        Access Dashboard
                     </button>
                 </form>
             </div>

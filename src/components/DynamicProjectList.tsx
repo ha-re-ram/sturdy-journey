@@ -56,19 +56,18 @@ export default function DynamicProjectList() {
     };
 
     if (loading) return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {[1, 2, 3].map((i) => (
-                <div key={i} className="flex flex-col p-8 border border-gray-800 rounded-3xl bg-gray-900/10 backdrop-blur-sm animate-pulse h-[400px]">
-                    <div className="w-12 h-12 bg-gray-800/50 rounded-2xl mb-8"></div>
-                    <div className="h-6 w-3/4 bg-gray-800/50 rounded-lg mb-4"></div>
-                    <div className="h-4 w-full bg-gray-800/50 rounded-lg mb-2"></div>
-                    <div className="h-4 w-5/6 bg-gray-800/50 rounded-lg mb-2"></div>
-                    <div className="h-4 w-4/6 bg-gray-800/50 rounded-lg mb-6"></div>
-                    <div className="mt-auto flex justify-between pt-6 border-t border-gray-800/50">
-                        <div className="h-4 w-12 bg-gray-800/50 rounded-lg"></div>
+                <div key={i} className="flex flex-col p-8 border border-white/40 rounded-[2.5rem] bg-white/20 backdrop-blur-xl animate-pulse h-[400px]">
+                    <div className="w-12 h-12 bg-[#1a1a1a]/10 rounded-full mb-8"></div>
+                    <div className="h-8 w-3/4 bg-[#1a1a1a]/10 rounded-full mb-4"></div>
+                    <div className="h-4 w-full bg-[#1a1a1a]/5 rounded-full mb-3"></div>
+                    <div className="h-4 w-5/6 bg-[#1a1a1a]/5 rounded-full mb-3"></div>
+                    <div className="h-4 w-4/6 bg-[#1a1a1a]/5 rounded-full mb-8"></div>
+                    <div className="mt-auto flex justify-between pt-6 border-t border-[#1a1a1a]/5">
+                        <div className="h-6 w-16 bg-[#1a1a1a]/10 rounded-full"></div>
                         <div className="flex gap-4">
-                            <div className="h-4 w-16 bg-gray-800/50 rounded-lg"></div>
-                            <div className="h-4 w-16 bg-gray-800/50 rounded-lg"></div>
+                            <div className="h-6 w-16 bg-[#1a1a1a]/10 rounded-full"></div>
                         </div>
                     </div>
                 </div>
@@ -77,8 +76,8 @@ export default function DynamicProjectList() {
     );
 
     if (projects.length === 0) return (
-        <div className="text-center py-20 border border-gray-800 rounded-3xl bg-gray-900/20">
-            <p className="text-gray-500 text-lg">No repositories found. Add some from the Admin Dashboard!</p>
+        <div className="text-center py-32 border border-[#1a1a1a]/10 rounded-[2.5rem] bg-white/20 backdrop-blur-xl">
+            <p className="text-[#4a4a4a] text-xl font-cormorant italic">No repositories found. Add some from the Admin Dashboard!</p>
         </div>
     );
 
@@ -87,68 +86,65 @@ export default function DynamicProjectList() {
             variants={container}
             initial="hidden"
             animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"
         >
             {projects.map((repo) => (
                 <motion.div
                     key={repo.id}
                     variants={itemVariant}
-                    className="group flex flex-col p-8 border border-gray-800 rounded-3xl bg-gray-900/20 backdrop-blur-sm hover:bg-gray-900/40 hover:border-blue-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/5"
+                    className="group flex flex-col p-8 border border-white/40 rounded-[2.5rem] bg-white/30 backdrop-blur-xl hover:bg-white/50 transition-all duration-700 ease-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] overflow-hidden"
                 >
-                    <div className="flex justify-between items-start mb-6">
+                    <div className="flex justify-between items-start mb-8">
                         {repo.imageUrl ? (
-                            <img src={repo.imageUrl} alt={repo.title} className="w-full h-40 object-cover rounded-2xl border border-gray-800/50 mb-2" />
+                            <img src={repo.imageUrl} alt={repo.title} className="w-full h-48 object-cover rounded-3xl border border-white/20 mb-2 shadow-sm" />
                         ) : (
-                            <div className="p-3 bg-gray-800/50 rounded-2xl group-hover:bg-blue-500/20 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400 group-hover:text-blue-400 transition-colors"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>
+                            <div className="w-full h-48 bg-[#1a1a1a]/5 rounded-3xl flex items-center justify-center mb-2">
+                                <span className="font-syne font-black text-4xl text-[#1a1a1a]/20 uppercase">{repo.title.substring(0, 2)}</span>
                             </div>
                         )}
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-6 flex-grow">
                         <Link href={`/article?id=${repo.id}&type=projects`}>
-                            <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                            <h2 className="text-3xl font-syne font-bold text-[#1a1a1a] mb-4 group-hover:opacity-60 transition-opacity tracking-tight uppercase break-words hyphens-auto">
                                 {repo.title}
                             </h2>
                         </Link>
-                        <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-4 min-h-[5rem]">
+                        <p className="text-[#4a4a4a] text-lg font-light leading-relaxed mb-6 line-clamp-4 min-h-[5rem]">
                             {(repo.content || "").substring(0, 160)}...
                         </p>
                     </div>
 
                     <div className="mt-auto space-y-6">
                         {repo.category && (
-                            <div className={`inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded-full border ${repo.category.toLowerCase() === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                repo.category.toLowerCase() === 'working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                                    'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                            <div className={`inline-flex items-center gap-2 text-[10px] font-syne uppercase tracking-widest font-bold px-4 py-2 rounded-full border ${repo.category.toLowerCase() === 'completed' ? 'bg-[#1a1a1a]/5 text-[#1a1a1a] border-[#1a1a1a]/10' :
+                                repo.category.toLowerCase() === 'working' ? 'bg-[#1a1a1a]/5 text-[#1a1a1a] border-[#1a1a1a]/10' :
+                                    'bg-[#1a1a1a]/5 text-[#1a1a1a] border-[#1a1a1a]/10'
                                 }`}>
-                                <span className={`w-1.5 h-1.5 rounded-full ${repo.category.toLowerCase() === 'completed' ? 'bg-emerald-500' :
-                                    repo.category.toLowerCase() === 'working' ? 'bg-amber-500' : 'bg-blue-500'
-                                    }`}></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a]"></span>
                                 {repo.category}
                             </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-6 border-t border-gray-800/50">
-                            <span className="text-xs text-gray-500">
+                        <div className="flex items-center justify-between pt-6 border-t border-[#1a1a1a]/10">
+                            <span className="text-sm font-syne font-bold text-[#1a1a1a]/50">
                                 {new Date(repo.date).getFullYear()}
                             </span>
-                            <div className="flex gap-4">
+                            <div className="flex gap-2">
                                 <Link
                                     href={`/article?id=${repo.id}&type=projects`}
-                                    className="text-white hover:text-blue-400 font-medium text-sm flex items-center gap-2 transition-colors"
+                                    className="px-5 py-2 rounded-full bg-[#1a1a1a] text-[#E5D5D0] font-syne text-xs uppercase tracking-widest font-bold hover:bg-[#1a1a1a]/80 transition-colors"
                                 >
-                                    Details
+                                    View
                                 </Link>
 
                                 {repo.githubUrl && (
                                     <Link
                                         href={repo.githubUrl}
                                         target="_blank"
-                                        className="text-white hover:text-blue-400 font-medium text-sm flex items-center gap-2 transition-colors"
+                                        className="w-10 h-10 rounded-full border border-[#1a1a1a]/20 flex items-center justify-center text-[#1a1a1a] hover:bg-[#1a1a1a]/5 transition-colors group-hover/btn:bg-white"
                                     >
-                                        Source
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:rotate-45 transition-transform"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70"><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0 -.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2V21" /></svg>
                                     </Link>
                                 )}
                             </div>

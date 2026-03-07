@@ -92,30 +92,31 @@ export default function TerminalEasterEgg() {
                     initial={{ opacity: 0, y: 50, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 50, scale: 0.95 }}
-                    className="fixed bottom-6 right-6 w-full max-w-[400px] h-[350px] bg-black/90 backdrop-blur-xl border border-gray-800 rounded-xl shadow-2xl z-[100] flex flex-col font-mono text-sm overflow-hidden"
+                    className="fixed bottom-6 right-6 w-full max-w-[400px] h-[350px] bg-white/40 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] z-[100] flex flex-col font-mono text-sm overflow-hidden"
                 >
-                    <div className="flex justify-between items-center px-4 py-2 bg-gray-900 border-b border-gray-800 select-none">
+                    <div className="flex justify-between items-center px-4 py-3 bg-white/40 border-b border-white/50 select-none backdrop-blur-md">
                         <div className="flex gap-2">
-                            <div className="w-3 h-3 rounded-full bg-red-500 cursor-pointer" onClick={() => setIsOpen(false)}></div>
-                            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-[#1a1a1a]/20 hover:bg-[#1a1a1a]/40 transition-colors cursor-pointer" onClick={() => setIsOpen(false)}></div>
+                            <div className="w-3 h-3 rounded-full bg-[#1a1a1a]/10"></div>
+                            <div className="w-3 h-3 rounded-full bg-[#1a1a1a]/10"></div>
                         </div>
-                        <span className="text-gray-500 text-xs">hk-os terminal (Ctrl+`)</span>
+                        <span className="text-[#1a1a1a]/40 font-syne font-bold tracking-widest uppercase text-[10px]">hk-os (Ctrl+`)</span>
                     </div>
-                    <div className="flex-1 p-4 overflow-y-auto w-full custom-scrollbar" onClick={() => inputRef.current?.focus()}>
+                    <div className="flex-1 p-5 overflow-y-auto w-full custom-scrollbar text-[#1a1a1a]" onClick={() => inputRef.current?.focus()}>
                         {output.map((line, i) => (
-                            <div key={i} className={`mb-1 ${line.type === 'error' ? 'text-red-400' : line.type === 'user' ? 'text-blue-400' : line.type === 'ascii' ? 'text-emerald-500 whitespace-pre font-bold' : 'text-gray-300'}`}>
+                            <div key={i} className={`mb-1.5 ${line.type === 'error' ? 'text-red-500 font-medium' : line.type === 'user' ? 'text-[#1a1a1a]/60 font-semibold' : line.type === 'ascii' ? 'text-[#1a1a1a] whitespace-pre font-black' : 'text-[#1a1a1a]/80 font-light'}`}>
                                 {line.text}
                             </div>
                         ))}
-                        <form onSubmit={handleCommand} className="flex gap-2 mt-2 w-full">
-                            <span className="text-emerald-500">~/hk</span><span className="text-gray-400">$</span>
+                        <form onSubmit={handleCommand} className="flex gap-2 mt-4 w-full">
+                            <span className="text-[#1a1a1a] font-bold">~/hk</span>
+                            <span className="text-[#1a1a1a]/40">❯</span>
                             <input
                                 ref={inputRef}
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                className="bg-transparent border-none outline-none text-white w-full"
+                                className="bg-transparent border-none outline-none text-[#1a1a1a] w-full font-medium placeholder-[#1a1a1a]/20"
                                 autoComplete="off"
                                 autoFocus
                             />

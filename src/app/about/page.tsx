@@ -2,6 +2,7 @@
 
 import { siteConfig } from "@/lib/config";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function About() {
@@ -21,61 +22,81 @@ export default function About() {
     };
 
     return (
-        <main className="min-h-screen bg-black text-white py-20 px-6 sm:px-10 max-w-5xl mx-auto">
+        <main className="min-h-screen py-32 px-6 sm:px-10 max-w-5xl mx-auto z-20 relative">
             <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={staggerContainer}
             >
                 {/* Header Section */}
-                <motion.section variants={fadeIn} className="mb-24">
-                    <h1 className="text-6xl md:text-8xl font-black mb-12 bg-gradient-to-r from-white via-gray-300 to-gray-600 bg-clip-text text-transparent">
-                        About Me
+                <motion.section variants={fadeIn} className="mb-32">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-syne font-black uppercase tracking-tighter mb-16 text-[#1a1a1a] leading-none">
+                        About <br /><span className="font-cormorant italic font-light tracking-tight normal-case text-6xl md:text-8xl lg:text-9xl text-[#1a1a1a]">The Developer</span>
                     </h1>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-16 items-start">
-                        <div className="md:col-span-2">
-                            <p className="text-2xl md:text-3xl text-gray-300 leading-relaxed mb-8 font-light italic">
-                                &quot;I build systems that don&apos;t just work, but <span className="text-white font-medium">scale and endure</span>.&quot;
-                            </p>
-                            <p className="text-lg text-gray-400 leading-relaxed space-y-4">
-                                I am <span className="text-white font-medium">Hareram Kushwaha</span>, a Computer Science Engineering student at <span className="text-white">KPR Institute of Engineering and Technology</span>. My philosophy is simple: write correct, readable code and never stop solving complex problems.
-                            </p>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                        {/* Image Column */}
+                        <div className="lg:col-span-5 relative w-full h-[50vh] md:h-[70vh] rounded-[3.5rem] overflow-hidden border-[8px] border-white/40 shadow-[0_30px_60px_rgba(0,0,0,0.05)] bg-white/20 group order-1 lg:order-2">
+                            <Image
+                                src="/images/IMG-20240427-WA0148.jpg"
+                                alt="Hareram Kushwaha"
+                                fill
+                                className="object-cover object-center filter grayscale-[0.5] group-hover:grayscale-0 transition-all duration-1000 ease-out group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-[#E5D5D0]/10 mix-blend-overlay"></div>
                         </div>
-                        <motion.div
-                            whileHover={{ scale: 1.02 }}
-                            className="glass p-8 rounded-3xl"
-                        >
-                            <h3 className="text-xs uppercase tracking-[0.3em] text-blue-500 font-bold mb-6">Expertise</h3>
-                            <ul className="space-y-4 text-gray-300">
-                                <li className="flex items-center gap-3">
-                                    <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></span>
-                                    Full-Stack (MERN)
-                                </li>
-                                <li className="flex items-center gap-3">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-                                    DS & Algorithms
-                                </li>
-                                <li className="flex items-center gap-3">
-                                    <span className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></span>
-                                    System Design
-                                </li>
-                            </ul>
-                        </motion.div>
+
+                        {/* Text Column */}
+                        <div className="lg:col-span-7 flex flex-col gap-12 order-2 lg:order-1">
+                            <div>
+                                <p className="text-3xl md:text-5xl font-cormorant italic text-[#1a1a1a] leading-tight mb-10 font-light relative">
+                                    <span className="absolute -left-8 -top-8 text-8xl text-[#1a1a1a]/10 font-syne font-black">"</span>
+                                    I build systems that don't just work, but <span className="font-syne not-italic font-bold tracking-tight uppercase text-2xl md:text-3xl bg-white/40 px-3 py-1 rounded-xl">scale and endure</span>.
+                                </p>
+                                <p className="text-xl text-[#4a4a4a] leading-relaxed font-light mb-6 border-l-2 border-[#1a1a1a]/20 pl-6">
+                                    I am <span className="font-syne font-bold uppercase tracking-widest text-sm text-[#1a1a1a]">Hareram Kushwaha</span>, a Computer Science Engineering student at KPR Institute of Engineering and Technology.
+                                </p>
+                                <p className="text-lg text-[#4a4a4a] leading-relaxed font-light pl-6">
+                                    My philosophy is simple: write correct, readable code and never stop solving complex problems. I bridge the gap between heavy backend logic and seamless, beautiful user interfaces, ensuring that every layer of the stack is meticulously crafted.
+                                </p>
+                            </div>
+
+                            <motion.div
+                                whileHover={{ scale: 1.02 }}
+                                className="bg-white/30 backdrop-blur-xl border border-white/40 p-10 rounded-[2.5rem] shadow-[0_10px_30px_rgba(0,0,0,0.02)] self-start w-full md:w-auto min-w-[300px]"
+                            >
+                                <h3 className="text-xs uppercase tracking-[0.3em] font-syne font-bold mb-8 text-[#1a1a1a]/50">Core Expertise</h3>
+                                <ul className="space-y-6 text-[#1a1a1a] font-syne font-bold uppercase tracking-widest text-sm">
+                                    <li className="flex items-center gap-4">
+                                        <span className="w-2 h-2 rounded-full bg-[#1a1a1a]"></span>
+                                        Full-Stack (MERN)
+                                    </li>
+                                    <li className="flex items-center gap-4">
+                                        <span className="w-2 h-2 rounded-full bg-[#1a1a1a]/60"></span>
+                                        DS & Algorithms
+                                    </li>
+                                    <li className="flex items-center gap-4">
+                                        <span className="w-2 h-2 rounded-full bg-[#1a1a1a]/30"></span>
+                                        System Design Architecture
+                                    </li>
+                                </ul>
+                            </motion.div>
+                        </div>
                     </div>
                 </motion.section>
 
                 {/* Tech Stack */}
                 <motion.section variants={fadeIn} className="mb-32">
-                    <h2 className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-10 flex items-center gap-4">
-                        <span className="w-12 h-px bg-gray-900"></span>
+                    <h2 className="text-sm uppercase tracking-[0.4em] font-syne font-bold mb-10 flex items-center gap-4 text-[#1a1a1a]/60">
+                        <span className="w-12 h-px bg-[#1a1a1a]/20"></span>
                         Technologies
                     </h2>
                     <div className="flex flex-wrap gap-4">
                         {['Java', 'JavaScript (ES6+)', 'PHP', 'Python', 'React.js', 'Node.js', 'MongoDB', 'MySQL', 'HTML & CSS', 'Git & GitHub'].map((tech) => (
                             <motion.span
                                 key={tech}
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
-                                className="px-6 py-3 border border-gray-800 rounded-2xl text-base text-gray-300 transition-colors cursor-default"
+                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.6)" }}
+                                className="px-6 py-3 border border-white/40 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium text-[#1a1a1a] transition-colors cursor-default"
                             >
                                 {tech}
                             </motion.span>
@@ -85,23 +106,23 @@ export default function About() {
 
                 {/* Experience Section */}
                 <motion.section variants={fadeIn} className="mb-32">
-                    <h2 className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-12 flex items-center gap-4">
-                        <span className="w-12 h-px bg-gray-900"></span>
+                    <h2 className="text-sm uppercase tracking-[0.4em] font-syne font-bold mb-12 flex items-center gap-4 text-[#1a1a1a]/60">
+                        <span className="w-12 h-px bg-[#1a1a1a]/20"></span>
                         Experience
                     </h2>
-                    <div className="relative pl-12 border-l border-gray-900 ml-4 group">
-                        <div className="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-blue-500 ring-8 ring-black group-hover:scale-150 transition-transform"></div>
+                    <div className="relative pl-12 border-l border-[#1a1a1a]/10 ml-4 group">
+                        <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-[#1a1a1a] group-hover:scale-150 transition-transform"></div>
                         <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                             <div>
-                                <h3 className="text-3xl font-bold text-white">Full Stack Intern</h3>
-                                <p className="text-xl text-blue-400 font-medium">Oasis Infobyte</p>
+                                <h3 className="text-3xl font-cormorant italic font-bold">Full Stack Intern</h3>
+                                <p className="text-lg font-syne uppercase tracking-wider font-bold mt-2">Oasis Infobyte</p>
                             </div>
-                            <span className="text-gray-500 font-mono">2024 — Present</span>
+                            <span className="text-[#1a1a1a]/60 font-mono text-sm">2024 — Present</span>
                         </div>
-                        <ul className="space-y-4 text-gray-400 text-lg max-w-3xl">
-                            <li className="flex gap-4 italic">&mdash; Engineered a responsive storefront interface achieving 100% cross-device compatibility.</li>
-                            <li className="flex gap-4 italic">&mdash; Reduced average page-load time by 200ms through optimized asset-loading.</li>
-                            <li className="flex gap-4 italic">&mdash; Decreased merge conflict frequency by 30% using advanced Git strategies.</li>
+                        <ul className="space-y-4 text-[#4a4a4a] text-lg max-w-3xl font-light">
+                            <li className="flex gap-4">&mdash; Engineered a responsive storefront interface achieving 100% cross-device compatibility.</li>
+                            <li className="flex gap-4">&mdash; Reduced average page-load time by 200ms through optimized asset-loading.</li>
+                            <li className="flex gap-4">&mdash; Decreased merge conflict frequency by 30% using advanced Git strategies.</li>
                         </ul>
                     </div>
                 </motion.section>
@@ -109,27 +130,26 @@ export default function About() {
                 {/* Selected Projects */}
                 <motion.section variants={fadeIn} className="mb-32">
                     <div className="flex justify-between items-end mb-12">
-                        <h2 className="text-4xl font-bold">Selected Work</h2>
-                        <Link href="/projects" className="text-blue-400 hover:text-white transition-colors flex items-center gap-2 group">
-                            Full Portfolio
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-2 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                        <h2 className="text-5xl md:text-6xl font-syne font-black uppercase tracking-tighter">Selected <span className="font-cormorant italic font-light lowercase">Work</span></h2>
+                        <Link href="/projects" className="text-[#1a1a1a] font-syne font-bold uppercase tracking-widest text-sm hover:opacity-60 transition-colors flex items-center gap-2 group pb-2">
+                            Full Portfolio <span className="group-hover:translate-x-2 transition-transform">→</span>
                         </Link>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {siteConfig.projects.slice(0, 4).map((project) => (
                             <motion.a
                                 key={project.name}
-                                whileHover={{ y: -10 }}
+                                whileHover={{ y: -5 }}
                                 href={`https://github.com/${siteConfig.social.github}/${project.name}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group p-10 glass rounded-[2.5rem] hover:bg-white/5 transition-all"
+                                className="group p-10 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[2.5rem] hover:bg-white/50 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.03)]"
                             >
-                                <h3 className="text-2xl font-bold mb-4 flex items-center justify-between">
+                                <h3 className="text-2xl font-syne font-bold uppercase tracking-tight mb-4 flex items-center justify-between">
                                     {project.name.replace(/-/g, ' ')}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+                                    <span className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
                                 </h3>
-                                <p className="text-gray-400 text-lg group-hover:text-gray-300 transition-colors font-light">
+                                <p className="text-[#4a4a4a] text-lg font-light">
                                     {project.description}
                                 </p>
                             </motion.a>
@@ -140,68 +160,66 @@ export default function About() {
                 {/* Education & Links */}
                 <motion.section variants={fadeIn} className="mb-32 grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className="space-y-8">
-                        <h2 className="text-2xl font-bold mb-8">Work & Practice</h2>
+                        <h2 className="text-3xl font-cormorant italic font-bold mb-8">Work & Practice</h2>
                         <div className="flex flex-col gap-4">
-                            <a href={`https://leetcode.com/u/${siteConfig.social.leetcode}/`} target="_blank" className="group flex items-center gap-6 p-6 glass rounded-3xl hover:border-orange-500/50 transition-all">
-                                <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 text-2xl font-black">L</div>
+                            <a href={`https://leetcode.com/u/${siteConfig.social.leetcode}/`} target="_blank" className="group flex items-center gap-6 p-6 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[2rem] hover:bg-white/50 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#1a1a1a] text-2xl font-syne font-black">L</div>
                                 <div>
-                                    <div className="text-xl font-bold">LeetCode</div>
-                                    <div className="text-gray-500 font-light italic">Algorithmic Problem Solving</div>
+                                    <div className="text-xl font-syne font-bold uppercase tracking-tight">LeetCode</div>
+                                    <div className="text-[#4a4a4a] font-light">Algorithmic Problem Solving</div>
                                 </div>
                             </a>
-                            <a href={`https://www.hackerrank.com/profile/${siteConfig.social.hackerrank}`} target="_blank" className="group flex items-center gap-6 p-6 glass rounded-3xl hover:border-green-500/50 transition-all">
-                                <div className="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center text-green-500 text-2xl font-black">H</div>
+                            <a href={`https://www.hackerrank.com/profile/${siteConfig.social.hackerrank}`} target="_blank" className="group flex items-center gap-6 p-6 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[2rem] hover:bg-white/50 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#1a1a1a] text-2xl font-syne font-black">H</div>
                                 <div>
-                                    <div className="text-xl font-bold">HackerRank</div>
-                                    <div className="text-gray-500 font-light italic">OOP & Java Fundamentals</div>
+                                    <div className="text-xl font-syne font-bold uppercase tracking-tight">HackerRank</div>
+                                    <div className="text-[#4a4a4a] font-light">OOP & Java Fundamentals</div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div className="glass p-12 rounded-[3rem] border-white/5 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl group-hover:bg-blue-500/10 transition-colors"></div>
-                        <h2 className="text-3xl font-bold mb-8">Professional Resume</h2>
-                        <p className="text-gray-400 text-lg mb-10 font-light leading-relaxed">
+                    <div className="bg-[#1a1a1a] p-12 rounded-[3rem] text-[#E5D5D0] relative overflow-hidden group flex flex-col justify-center">
+                        <h2 className="text-4xl font-syne font-bold uppercase tracking-tighter mb-6 relative z-10">Professional Resume</h2>
+                        <p className="text-white/70 text-lg mb-10 font-light leading-relaxed relative z-10">
                             Looking for a printable or single-page version of my journey? Get the latest copy of my resume here.
                         </p>
                         <a
                             href={siteConfig.resumeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-all w-full"
+                            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#E5D5D0] text-[#1a1a1a] font-syne font-bold uppercase tracking-widest text-sm rounded-full hover:scale-[1.02] transition-all w-full relative z-10 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.2)]"
                         >
                             View PDF Resume
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                            <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
                         </a>
                     </div>
                 </motion.section>
 
                 {/* Contact Section */}
-                <motion.section variants={fadeIn} className="border-t border-gray-900 pt-32 pb-20">
-                    <h2 className="text-5xl md:text-7xl font-black mb-16">Connect.</h2>
+                <motion.section variants={fadeIn} className="border-t border-[#1a1a1a]/10 pt-32 pb-20">
+                    <h2 className="text-7xl md:text-9xl font-syne font-black uppercase tracking-tighter mb-16">Connect.</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
                         <div className="space-y-10">
-                            <p className="text-gray-400 text-2xl font-light leading-relaxed">
+                            <p className="text-[#4a4a4a] text-2xl font-light leading-relaxed">
                                 I am usually online and responsive to messages regarding interesting projects or opportunities.
                             </p>
                             <div className="flex flex-col gap-6">
-                                <a href={`mailto:${siteConfig.contact.email}`} className="text-3xl md:text-4xl font-medium text-white hover:text-blue-400 transition-colors break-words">
+                                <a href={`mailto:${siteConfig.contact.email}`} className="text-3xl md:text-5xl font-cormorant italic text-[#1a1a1a] hover:opacity-60 transition-colors break-words">
                                     {siteConfig.contact.email}
                                 </a>
-                                <a href={`tel:${siteConfig.contact.phone}`} className="text-2xl text-gray-400 hover:text-white transition-colors">
+                                <a href={`tel:${siteConfig.contact.phone}`} className="text-xl font-syne font-bold text-[#1a1a1a]/60 hover:text-[#1a1a1a] transition-colors">
                                     {siteConfig.contact.phone}
                                 </a>
                             </div>
                         </div>
                         <div className="flex flex-col justify-end gap-12">
                             <div className="flex flex-wrap gap-10">
-                                <a href={`https://linkedin.com/in/${siteConfig.social.linkedin}`} target="_blank" className="text-xl text-gray-500 hover:text-white transition-colors font-mono">LinkedIn</a>
-                                <a href={`https://github.com/${siteConfig.social.github}`} target="_blank" className="text-xl text-gray-500 hover:text-white transition-colors font-mono">GitHub</a>
-                                <a href={`https://twitter.com/${siteConfig.social.twitter}`} target="_blank" className="text-xl text-gray-500 hover:text-white transition-colors font-mono">Twitter</a>
-                                <a href={siteConfig.url} className="text-xl text-gray-500 hover:text-white transition-colors font-mono">Portfolio</a>
+                                <a href={`https://linkedin.com/in/${siteConfig.social.linkedin}`} target="_blank" className="text-sm font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/80 hover:text-[#1a1a1a] transition-colors">LinkedIn</a>
+                                <a href={`https://github.com/${siteConfig.social.github}`} target="_blank" className="text-sm font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/80 hover:text-[#1a1a1a] transition-colors">GitHub</a>
+                                <a href={`https://twitter.com/${siteConfig.social.twitter}`} target="_blank" className="text-sm font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/80 hover:text-[#1a1a1a] transition-colors">Twitter</a>
                             </div>
-                            <p className="text-gray-700 font-mono text-sm uppercase tracking-widest">
-                                &copy; 2024 Hareram Kushwaha &bull; Design by Antigravity
+                            <p className="text-[#1a1a1a]/50 font-syne text-xs uppercase tracking-widest font-bold">
+                                &copy; 2026 Hareram Kushwaha &bull; Design by Antigravity
                             </p>
                         </div>
                     </div>

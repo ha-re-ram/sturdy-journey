@@ -212,43 +212,45 @@ export default function AdminDashboard() {
         router.push("/admin");
     };
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center bg-black text-white">Loading...</div>;
+    if (loading) return <div className="min-h-screen flex items-center justify-center bg-[#E5D5D0] text-[#1a1a1a] font-syne font-bold uppercase tracking-widest text-sm animate-pulse">Loading...</div>;
     if (!user) return null;
 
     return (
-        <main className="min-h-screen bg-black text-white p-8">
+        <main className="min-h-screen pt-32 p-8 relative z-20 text-[#1a1a1a]">
             <div className="max-w-6xl mx-auto">
-                <div className="flex justify-between items-center mb-10">
-                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-500">
-                        Admin CMS
+                <div className="flex justify-between items-center mb-16">
+                    <h1 className="text-5xl md:text-6xl font-syne font-black uppercase tracking-tighter text-[#1a1a1a]">
+                        Admin <span className="font-cormorant italic font-light lowercase">CMS</span>
                     </h1>
-                    <button onClick={handleLogout} className="bg-red-500/20 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/40 transition">
+                    <button onClick={handleLogout} className="bg-[#1a1a1a]/5 hover:bg-[#1a1a1a]/10 text-[#1a1a1a] px-6 py-2 rounded-full border border-[#1a1a1a]/10 font-syne font-bold uppercase tracking-widest text-xs transition-colors">
                         Logout
                     </button>
                 </div>
 
-                <div className="flex gap-4 mb-8 border-b border-gray-800 pb-2">
+                <div className="flex gap-4 mb-12 border-b border-[#1a1a1a]/10 pb-4">
                     <button
                         onClick={() => handleTabChange("blogs")}
-                        className={`px-4 py-2 font-semibold transition-colors ${tab === "blogs" ? "text-blue-400 border-b-2 border-blue-400" : "text-gray-500 hover:text-gray-300"}`}
+                        className={`px-4 py-2 font-syne font-bold uppercase tracking-widest text-sm transition-colors relative ${tab === "blogs" ? "text-[#1a1a1a]" : "text-[#1a1a1a]/40 hover:text-[#1a1a1a]/80"}`}
                     >
                         📝 Blogs
+                        {tab === "blogs" && <span className="absolute bottom-[-16px] left-0 right-0 h-0.5 bg-[#1a1a1a]"></span>}
                     </button>
                     <button
                         onClick={() => handleTabChange("projects")}
-                        className={`px-4 py-2 font-semibold transition-colors ${tab === "projects" ? "text-blue-400 border-b-2 border-blue-400" : "text-gray-500 hover:text-gray-300"}`}
+                        className={`px-4 py-2 font-syne font-bold uppercase tracking-widest text-sm transition-colors relative ${tab === "projects" ? "text-[#1a1a1a]" : "text-[#1a1a1a]/40 hover:text-[#1a1a1a]/80"}`}
                     >
                         🚀 Projects
+                        {tab === "projects" && <span className="absolute bottom-[-16px] left-0 right-0 h-0.5 bg-[#1a1a1a]"></span>}
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Form Section */}
-                    <div className="bg-white/5 p-6 rounded-xl border border-white/10 flex flex-col h-fit">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold">{editId ? "Edit" : "Add New"} {tab === "blogs" ? "Blog" : "Project"}</h2>
+                    <div className="bg-white/30 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/40 flex flex-col h-fit shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                        <div className="flex justify-between items-center mb-8">
+                            <h2 className="text-2xl font-syne font-bold tracking-tight text-[#1a1a1a]">{editId ? "Edit" : "Add New"} {tab === "blogs" ? "Blog" : "Project"}</h2>
                             {editId && (
-                                <button onClick={resetForm} className="text-sm text-gray-400 hover:text-white px-3 py-1 bg-white/5 rounded-md border border-white/10">
+                                <button onClick={resetForm} className="text-[10px] font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/60 hover:text-[#1a1a1a] px-4 py-2 bg-white/50 rounded-full border border-[#1a1a1a]/10">
                                     Cancel Edit
                                 </button>
                             )}
@@ -257,41 +259,41 @@ export default function AdminDashboard() {
                         {tab === "projects" && (
                             <button
                                 onClick={fetchGithubRepos}
-                                className="mb-6 w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white py-3 rounded-lg border border-gray-600 transition"
+                                className="mb-8 w-full flex items-center justify-center gap-3 bg-[#1a1a1a]/5 hover:bg-[#1a1a1a]/10 text-[#1a1a1a] font-syne font-bold uppercase tracking-widest text-xs py-4 rounded-2xl border border-[#1a1a1a]/10 transition-colors"
                             >
                                 <Github size={18} /> Fetch / Import from GitHub
                             </button>
                         )}
 
                         {showGithub && tab === "projects" && (
-                            <div className="mb-6 max-h-48 overflow-y-auto bg-black p-4 rounded-lg border border-gray-800 custom-scrollbar fade-in">
+                            <div className="mb-8 max-h-48 overflow-y-auto bg-white/50 p-4 rounded-2xl border border-[#1a1a1a]/10 custom-scrollbar fade-in">
                                 {githubRepos.map(repo => (
-                                    <div key={repo.id} className="flex justify-between items-center p-2 border-b border-gray-800 hover:bg-gray-900 rounded cursor-pointer transition" onClick={() => importFromGithub(repo)}>
-                                        <span className="font-semibold">{repo.name}</span>
-                                        <Plus size={16} className="text-blue-400" />
+                                    <div key={repo.id} className="flex justify-between items-center p-3 border-b border-[#1a1a1a]/5 hover:bg-white/50 rounded-lg cursor-pointer transition-colors" onClick={() => importFromGithub(repo)}>
+                                        <span className="font-syne font-bold tracking-tight text-[#1a1a1a]">{repo.name}</span>
+                                        <Plus size={16} className="text-[#1a1a1a]" />
                                     </div>
                                 ))}
                             </div>
                         )}
 
-                        <form onSubmit={handleSave} className="space-y-4">
+                        <form onSubmit={handleSave} className="space-y-6">
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">Title</label>
+                                <label className="block text-[10px] font-syne font-bold uppercase tracking-[0.2em] text-[#1a1a1a]/60 mb-2">Title</label>
                                 <input
                                     type="text"
                                     required
-                                    className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500"
+                                    className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-colors font-medium"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
 
                             {tab === "projects" && (
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm text-gray-400 mb-1">Category</label>
+                                        <label className="block text-[10px] font-syne font-bold uppercase tracking-[0.2em] text-[#1a1a1a]/60 mb-2">Category</label>
                                         <select
-                                            className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 appearance-none"
+                                            className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-colors font-medium appearance-none"
                                             value={category}
                                             onChange={(e) => setCategory(e.target.value)}
                                         >
@@ -301,20 +303,20 @@ export default function AdminDashboard() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm text-gray-400 mb-1">Source URL (Git)</label>
+                                        <label className="block text-[10px] font-syne font-bold uppercase tracking-[0.2em] text-[#1a1a1a]/60 mb-2">Source URL</label>
                                         <input
                                             type="text"
-                                            className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500"
+                                            className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-colors font-medium"
                                             value={githubUrl}
                                             onChange={(e) => setGithubUrl(e.target.value)}
                                         />
                                     </div>
                                     <div className="col-span-2">
-                                        <label className="block text-sm text-gray-400 mb-1">Image URL (Optional)</label>
+                                        <label className="block text-[10px] font-syne font-bold uppercase tracking-[0.2em] text-[#1a1a1a]/60 mb-2">Image URL</label>
                                         <input
                                             type="text"
                                             placeholder="/projects/example.png or https://..."
-                                            className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500"
+                                            className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-colors font-medium"
                                             value={imageUrl}
                                             onChange={(e) => setImageUrl(e.target.value)}
                                         />
@@ -323,45 +325,45 @@ export default function AdminDashboard() {
                             )}
 
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">Content (Markdown supported)</label>
+                                <label className="block text-[10px] font-syne font-bold uppercase tracking-[0.2em] text-[#1a1a1a]/60 mb-2">Content (Markdown)</label>
                                 <textarea
                                     required
                                     rows={8}
-                                    className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 custom-scrollbar"
+                                    className="w-full bg-white/50 backdrop-blur-md border border-[#1a1a1a]/10 rounded-2xl p-4 text-[#1a1a1a] focus:outline-none focus:border-[#1a1a1a]/30 transition-colors font-medium custom-scrollbar"
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
                                     placeholder={tab === "projects" ? "## The Problem\n\n## The Architecture\n\n## The Impact & Results" : "Write your blog..."}
                                 />
                             </div>
 
-                            <button type="submit" className={`w-full font-bold py-3 mt-4 rounded-lg transition-colors ${editId ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-blue-600 hover:bg-blue-700'} text-white`}>
+                            <button type="submit" className={`w-full font-syne font-bold uppercase tracking-widest text-sm py-4 mt-6 rounded-full transition-shadow hover:shadow-xl ${editId ? 'bg-[#1a1a1a] text-[#E5D5D0]' : 'bg-[#1a1a1a] text-[#E5D5D0]'}`}>
                                 {editId ? "Update" : "Publish"} {tab === "blogs" ? "Blog" : "Project"}
                             </button>
                         </form>
                     </div>
 
                     {/* List Section */}
-                    <div className="bg-white/5 p-6 rounded-xl border border-white/10 flex flex-col">
-                        <h2 className="text-2xl font-bold mb-6 flex justify-between items-center">
+                    <div className="bg-white/30 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/40 flex flex-col shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                        <h2 className="text-2xl font-syne font-bold tracking-tight mb-8 flex justify-between items-center text-[#1a1a1a]">
                             <span>Manage {tab === "blogs" ? "Blogs" : "Projects"}</span>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-4">
                                 {items.length > 1 && (
                                     <button
                                         onClick={saveReorder}
                                         disabled={isSavingOrder}
-                                        className="flex items-center gap-2 text-sm bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/40 px-4 py-1.5 rounded-full border border-emerald-500/20 transition disabled:opacity-50"
+                                        className="flex items-center gap-2 text-[10px] font-syne font-bold uppercase tracking-widest bg-[#1a1a1a] text-[#E5D5D0] hover:bg-[#1a1a1a]/80 px-6 py-3 rounded-full transition-colors disabled:opacity-50"
                                     >
                                         <Save size={14} /> {isSavingOrder ? "Saving..." : "Save Order"}
                                     </button>
                                 )}
-                                <span className="text-sm font-normal text-gray-500 bg-black/50 px-3 py-1 rounded-full border border-gray-800">Total: {items.length}</span>
+                                <span className="text-[10px] font-syne font-bold uppercase tracking-widest text-[#1a1a1a] bg-white px-4 py-2 rounded-full border border-white/40 shadow-sm">{items.length} Items</span>
                             </div>
                         </h2>
 
                         <div className="space-y-4 max-h-[750px] overflow-y-auto pr-2 custom-scrollbar flex-1 overflow-x-hidden">
                             {items.length === 0 ? (
-                                <div className="text-center py-20 text-gray-600 bg-black/20 rounded-xl border border-dashed border-gray-800">
-                                    No {tab} found. Create your first one!
+                                <div className="text-center py-20 text-[#1a1a1a]/40 bg-white/20 rounded-3xl border border-dashed border-[#1a1a1a]/20 font-cormorant italic text-lg">
+                                    No {tab} found. Create your first one.
                                 </div>
                             ) : (
                                 <Reorder.Group axis="y" values={items} onReorder={handleReorder} className="space-y-4">
@@ -369,38 +371,38 @@ export default function AdminDashboard() {
                                         <Reorder.Item
                                             key={item.id}
                                             value={item}
-                                            className={`bg-black/40 p-4 rounded-xl border transition group flex justify-between items-center cursor-grab active:cursor-grabbing ${editId === item.id ? 'border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-white/5 hover:border-blue-500/30'}`}
+                                            className={`bg-white/50 p-5 rounded-2xl border transition-all group flex justify-between items-center cursor-grab active:cursor-grabbing ${editId === item.id ? 'border-[#1a1a1a] shadow-[0_5px_15px_rgba(0,0,0,0.05)]' : 'border-[#1a1a1a]/5 hover:border-[#1a1a1a]/20 hover:bg-white/80'}`}
                                         >
 
                                             <div className="flex items-center gap-4 flex-1 overflow-hidden pointer-events-none">
-                                                <div className="flex flex-col gap-1 items-center px-1 text-gray-600 group-hover:text-gray-400 transition">
+                                                <div className="flex flex-col gap-1 items-center px-2 text-[#1a1a1a]/20 group-hover:text-[#1a1a1a]/40 transition-colors">
                                                     <GripVertical size={20} />
                                                 </div>
                                                 <div className="flex-1 truncate">
-                                                    <h3 className="font-semibold text-lg truncate flex items-center gap-3">
+                                                    <h3 className="font-syne font-bold tracking-tight text-lg text-[#1a1a1a] truncate flex items-center gap-3">
                                                         {item.title}
                                                         {tab === "projects" && (
-                                                            <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${item.category === 'Completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                                                item.category === 'Working' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                                                                    'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                                                            <span className={`text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full border ${item.category === 'Completed' ? 'bg-[#1a1a1a]/5 text-[#1a1a1a] border-[#1a1a1a]/10' :
+                                                                item.category === 'Working' ? 'bg-[#1a1a1a]/5 text-[#1a1a1a] border-[#1a1a1a]/10' :
+                                                                    'bg-[#1a1a1a]/5 text-[#1a1a1a] border-[#1a1a1a]/10'
                                                                 }`}>{item.category || "Completed"}</span>
                                                         )}
                                                     </h3>
-                                                    <p className="text-sm text-gray-500 truncate mr-4">{(item.content || "").substring(0, 80)}...</p>
+                                                    <p className="text-sm text-[#4a4a4a] font-light truncate mr-4 mt-1">{(item.content || "").substring(0, 80)}...</p>
                                                 </div>
                                             </div>
 
                                             <div className="flex gap-2">
                                                 <button
                                                     onClick={() => handleEdit(item)}
-                                                    className="text-amber-400 opacity-80 hover:opacity-100 hover:bg-amber-400/20 transition p-2 rounded-md bg-white/5 cursor-pointer"
+                                                    className="text-[#1a1a1a] opacity-40 hover:opacity-100 hover:bg-[#1a1a1a]/10 transition-colors p-3 rounded-xl bg-white/50 cursor-pointer"
                                                     title="Edit"
                                                 >
                                                     <Edit2 size={16} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(item.id)}
-                                                    className="text-red-400 opacity-80 hover:opacity-100 hover:bg-red-500/20 transition p-2 rounded-md bg-white/5 cursor-pointer"
+                                                    className="text-red-500 opacity-60 hover:opacity-100 hover:bg-red-50 transition-colors p-3 rounded-xl bg-white/50 cursor-pointer"
                                                     title="Delete"
                                                 >
                                                     <Trash2 size={16} />

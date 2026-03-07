@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { db, auth } from "@/lib/firebase";
 import { collection, addDoc, query, where, getDocs, orderBy } from "firebase/firestore";
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 
 export default function Comments({ itemId }: { itemId: string }) {
     const [comments, setComments] = useState<any[]>([]);
@@ -15,6 +15,11 @@ export default function Comments({ itemId }: { itemId: string }) {
             fetchComments();
             return;
         }
+        // Recover authentication state if returning from a mobile redirect login
+        getRedirectResult(auth).catch((error) => {
+            console.error("Redirect auth error:", error);
+        });
+
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
         });
@@ -67,49 +72,60 @@ export default function Comments({ itemId }: { itemId: string }) {
             alert("Firebase Auth not initialized. Check your environment variables.");
             return;
         }
+
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({
+            prompt: 'select_account'
+        });
+
         try {
-            const provider = new GoogleAuthProvider();
-            // Optional: force custom parameters if desired
-            provider.setCustomParameters({
-                prompt: 'select_account'
-            });
             await signInWithPopup(auth, provider);
         } catch (error: any) {
-            if (error.code === 'auth/popup-closed-by-user') {
-                // Ignore, user just closed it. Don't console.error to avoid Next.js dev overlay.
+            if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+                // Ignore, user simply closed or double-clicked the button. Do not console.error here to avoid Next.js dev overlays.
+                return;
+            }
+
+            console.error("Firebase Login Detailed Error:", error);
+
+            if (error.code === 'auth/popup-blocked') {
+                // Important fallback for mobile embedded browsers (Instagram, Medium, Safari strict mode)
+                signInWithRedirect(auth, provider);
             } else if (error.code === 'auth/unauthorized-domain') {
-                console.error("Login failed", error);
-                alert("Domain not authorized for Google Sign-In. Please add this domain to the Firebase Console -> Authentication -> Settings -> Authorized Domains.");
+                alert("Domain not authorized for Google Sign-In. Please add 'localhost' and your domain to the Firebase Console -> Authentication -> Settings -> Authorized Domains.");
+            } else if (error.code === 'auth/configuration-not-found' || error.message.includes("configuration")) {
+                alert("Google Sign-In is not enabled! Please go to your Firebase Console -> Authentication -> Sign-in method -> Enable 'Google'.");
+            } else if (error.code === 'auth/invalid-api-key') {
+                alert("Invalid Firebase API Key. Please check your .env.local file.");
             } else {
-                console.error("Login failed", error);
-                alert("Error logging in: " + error.message);
+                alert("Error logging in: " + error.message + " (Check console for details)");
             }
         }
     };
 
     return (
-        <div className="mt-16 pt-8 border-t border-gray-800">
-            <h3 className="text-2xl font-bold mb-6">Comments</h3>
+        <div className="mt-24 pt-16 border-t border-[#1a1a1a]/10">
+            <h3 className="text-4xl font-syne font-bold uppercase tracking-tighter mb-12 text-[#1a1a1a]">Comments</h3>
 
-            <div className="space-y-6 mb-8">
+            <div className="space-y-8 mb-12">
                 {comments.length === 0 ? (
-                    <p className="text-gray-500 italic">No comments yet. Be the first to share your thoughts!</p>
+                    <p className="text-[#1a1a1a]/40 font-cormorant italic text-xl">No comments yet. Be the first to share your thoughts.</p>
                 ) : (
                     comments.map(c => (
-                        <div key={c.id} className="bg-white/5 p-4 rounded-xl border border-white/10 flex gap-4">
+                        <div key={c.id} className="bg-white/30 backdrop-blur-md p-6 rounded-[2rem] border border-white/40 flex gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
                             {c.authorParams?.photo ? (
-                                <img src={c.authorParams.photo} alt="Avatar" className="w-10 h-10 rounded-full" />
+                                <img src={c.authorParams.photo} alt="Avatar" className="w-12 h-12 rounded-full shadow-sm" />
                             ) : (
-                                <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold">
+                                <div className="w-12 h-12 rounded-full bg-[#1a1a1a]/5 text-[#1a1a1a] flex items-center justify-center font-syne font-bold text-lg border border-[#1a1a1a]/10">
                                     {c.authorParams?.name?.[0]?.toUpperCase()}
                                 </div>
                             )}
-                            <div>
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold">{c.authorParams?.name}</span>
-                                    <span className="text-xs text-gray-500">{new Date(c.date).toLocaleDateString()}</span>
+                            <div className="flex-1">
+                                <div className="flex items-center gap-4 mb-2">
+                                    <span className="font-syne font-bold tracking-tight text-[#1a1a1a] text-lg">{c.authorParams?.name}</span>
+                                    <span className="text-xs font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/40">{new Date(c.date).toLocaleDateString()}</span>
                                 </div>
-                                <p className="text-gray-300">{c.content}</p>
+                                <p className="text-[#4a4a4a] font-light leading-relaxed">{c.content}</p>
                             </div>
                         </div>
                     ))
@@ -117,24 +133,26 @@ export default function Comments({ itemId }: { itemId: string }) {
             </div>
 
             {user ? (
-                <form onSubmit={handleAddComment} className="flex flex-col gap-3">
+                <form onSubmit={handleAddComment} className="flex flex-col gap-4">
                     <textarea
-                        className="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white/30 backdrop-blur-md border border-[#1a1a1a]/10 rounded-[2rem] p-6 text-[#1a1a1a] font-light focus:outline-none focus:border-[#1a1a1a]/30 focus:bg-white/50 transition-all placeholder-[#1a1a1a]/30 resize-none shadow-[0_5px_15px_rgba(0,0,0,0.01)]"
                         rows={3}
                         placeholder="Write a comment..."
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         required
                     />
-                    <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold self-end transition-colors">
-                        Post Comment
-                    </button>
-                    <p className="text-xs text-gray-500 text-right">Commenting as {user.displayName || user.email}</p>
+                    <div className="flex justify-between items-center">
+                        <p className="text-xs font-syne font-bold uppercase tracking-widest text-[#1a1a1a]/40">Commenting as {user.displayName || user.email}</p>
+                        <button type="submit" className="bg-[#1a1a1a] hover:bg-[#1a1a1a]/80 text-[#E5D5D0] px-8 py-3 rounded-full font-syne font-bold uppercase tracking-widest text-xs transition-colors shadow-lg">
+                            Post Comment
+                        </button>
+                    </div>
                 </form>
             ) : (
-                <div className="bg-white/5 p-6 rounded-xl border border-white/10 text-center">
-                    <p className="mb-4 text-gray-400">You must be logged in to leave a comment.</p>
-                    <button onClick={loginWithGoogle} className="bg-white text-black font-semibold px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                <div className="bg-white/30 backdrop-blur-md p-10 rounded-[2.5rem] border border-white/40 text-center shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                    <p className="mb-8 text-[#1a1a1a]/60 font-cormorant italic text-xl">You must be logged in to leave a comment.</p>
+                    <button onClick={loginWithGoogle} className="bg-[#1a1a1a] text-[#E5D5D0] font-syne font-bold uppercase tracking-widest text-xs px-8 py-4 rounded-full hover:bg-[#1a1a1a]/80 transition-colors shadow-lg">
                         Login with Google
                     </button>
                 </div>
